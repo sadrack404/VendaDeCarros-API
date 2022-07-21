@@ -13,33 +13,36 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
-
     @Autowired
     ClienteRepository clienteRepository;
 
     @GetMapping
-    public List<Cliente> listar(){return clienteRepository.findAll();}
+    public List<Cliente> listar() { return clienteRepository.findAll(); }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> listarId(@PathVariable Long id){
+    public ResponseEntity<Cliente> listarId (@PathVariable Long id){
        Optional<Cliente> cliente = clienteRepository.findById(id);
-        return cliente.isPresent() ? ResponseEntity.ok(cliente.get()) : ResponseEntity.notFound().build();
+        return cliente.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> adicionar(@RequestBody Cliente cliente){
+    public ResponseEntity<Cliente> adicionar (@RequestBody Cliente cliente){
         return ResponseEntity.ok(clienteRepository.save(cliente));
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public  ResponseEntity<Cliente> alterar (@PathVariable Long id, @RequestBody Cliente cliente){
-        Optional<Cliente> clienteOptional = clienteRepository.findById(id);
-        if (clienteOptional.isPresent()){
-            BeanUtils.copyProperties(cliente, clienteOptional.get(), "id");
-            clienteRepository.save(clienteOptional.get());
-            return ResponseEntity.ok(clienteOptional.get());
+        Optional<Cliente> clienteAtual = clienteRepository.findById(id);
+        if (clienteAtual.isPresent()){
+            BeanUtils.copyProperties(cliente, clienteAtual.get(), "id");
+            var clienteSalvo = clienteRepository.save(clienteAtual.get());
+            return ResponseEntity.ok(clienteSalvo);
         }
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/{id}")
+    public void excluir (@PathVariable Long id){
+        clienteRepository.deleteById(id);
+    }
 }

@@ -18,14 +18,14 @@ public class CarroController {
     CarroRepository carroRepository;
 
     @GetMapping
-    public List<Carro> listarTodos(){
+    public List<Carro> listarTodos (){
         return carroRepository.findAll();
     }
 
     @GetMapping("/{codCar}")
     public ResponseEntity <Carro> listarUm (@PathVariable Long codCar) {
         Optional<Carro> carro = carroRepository.findById(codCar);
-        return carro.isPresent() ? ResponseEntity.ok(carro.get()) : ResponseEntity.notFound().build();
+        return carro.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -33,12 +33,11 @@ public class CarroController {
         return ResponseEntity.ok(carroRepository.save(carro));
     }
 
-    @PutMapping("/{codCar}")
-    public ResponseEntity <Carro> atualizar (@PathVariable Long codCar, @RequestBody Carro carro){
-        Optional <Carro> carroAtual = carroRepository.findById(codCar);
+    @PutMapping("/{id}")
+    public ResponseEntity <Carro> atualizar (@PathVariable Long id, @RequestBody Carro carro){
+        Optional <Carro> carroAtual = carroRepository.findById(id);
         if (carroAtual.isPresent()){
-            BeanUtils.copyProperties(carro, carroAtual.get(), "codCar");
-
+            BeanUtils.copyProperties(carro, carroAtual.get(), "id");
             Carro carroSalvo = carroRepository.save(carroAtual.get());
             return ResponseEntity.ok(carroSalvo);
         }

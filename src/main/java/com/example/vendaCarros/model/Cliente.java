@@ -12,7 +12,7 @@ public class Cliente {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codClie;
+    private Long id;
 
     @Column(nullable = false)
     private String nome;

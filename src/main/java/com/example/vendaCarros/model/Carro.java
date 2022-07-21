@@ -12,7 +12,7 @@ public class Carro {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codCar;
+    private Long id;
 
     @Column(nullable = false)
     private String placa;
