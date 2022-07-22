@@ -1,22 +1,15 @@
 package com.example.vendaCarros.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
 
-@Entity
 @Data
+@Embeddable
 public class Telefone {
 
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long telefone_pk;
-
-    @Column(nullable = false)
+    private String ddd;
     private String telefone;
+    private String celular;
 
-    @Column(nullable = false)
-    private String codCli_fk;
 }

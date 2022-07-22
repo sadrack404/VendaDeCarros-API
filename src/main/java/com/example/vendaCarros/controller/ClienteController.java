@@ -19,9 +19,9 @@ public class ClienteController {
     @GetMapping
     public List<Cliente> listar() { return clienteRepository.findAll(); }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Cliente> listarId (@PathVariable Long id){
-       Optional<Cliente> cliente = clienteRepository.findById(id);
+    @GetMapping("/{id_cliente}")
+    public ResponseEntity<Cliente> listarId (@PathVariable Long id_cliente){
+       Optional<Cliente> cliente = clienteRepository.findById(id_cliente);
         return cliente.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -30,9 +30,9 @@ public class ClienteController {
         return ResponseEntity.ok(clienteRepository.save(cliente));
     }
 
-    @PutMapping("/{id}")
-    public  ResponseEntity<Cliente> alterar (@PathVariable Long id, @RequestBody Cliente cliente){
-        Optional<Cliente> clienteAtual = clienteRepository.findById(id);
+    @PutMapping("/{id_cliente}")
+    public  ResponseEntity<Cliente> alterar (@PathVariable Long id_cliente, @RequestBody Cliente cliente){
+        Optional<Cliente> clienteAtual = clienteRepository.findById(id_cliente);
         if (clienteAtual.isPresent()){
             BeanUtils.copyProperties(cliente, clienteAtual.get(), "id");
             var clienteSalvo = clienteRepository.save(clienteAtual.get());

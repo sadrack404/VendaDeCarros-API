@@ -12,7 +12,7 @@ public class Carro {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_carro;
 
     @Column(nullable = false)
     private String placa;
@@ -26,5 +26,6 @@ public class Carro {
     @Column(nullable = false)
     private LocalDate ano;
 
+    @Column(nullable = false)
     private double diaria;
 }

@@ -12,7 +12,7 @@ public class Cliente {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_cliente;
 
     @Column(nullable = false)
     private String nome;
@@ -23,4 +23,8 @@ public class Cliente {
     @Embedded
     @Column
     private Endereco endereco;
+
+    @Column
+    @Embedded
+    private Telefone telefone;
 }

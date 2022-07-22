@@ -22,9 +22,9 @@ public class CarroController {
         return carroRepository.findAll();
     }
 
-    @GetMapping("/{codCar}")
-    public ResponseEntity <Carro> listarUm (@PathVariable Long codCar) {
-        Optional<Carro> carro = carroRepository.findById(codCar);
+    @GetMapping("/{id_carro}")
+    public ResponseEntity <Carro> listarUm (@PathVariable Long id_carro) {
+        Optional<Carro> carro = carroRepository.findById(id_carro);
         return carro.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -33,9 +33,9 @@ public class CarroController {
         return ResponseEntity.ok(carroRepository.save(carro));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity <Carro> atualizar (@PathVariable Long id, @RequestBody Carro carro){
-        Optional <Carro> carroAtual = carroRepository.findById(id);
+    @PutMapping("/{id_carro}")
+    public ResponseEntity <Carro> atualizar (@PathVariable Long id_carro, @RequestBody Carro carro){
+        Optional <Carro> carroAtual = carroRepository.findById(id_carro);
         if (carroAtual.isPresent()){
             BeanUtils.copyProperties(carro, carroAtual.get(), "id");
             Carro carroSalvo = carroRepository.save(carroAtual.get());
@@ -44,10 +44,10 @@ public class CarroController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{codCar}")
+    @DeleteMapping("/{id_carro}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void excluir (@PathVariable Long codCar) {
-        carroRepository.deleteById(codCar);
+    public void excluir (@PathVariable Long id_carro) {
+        carroRepository.deleteById(id_carro);
     }
 
 }
