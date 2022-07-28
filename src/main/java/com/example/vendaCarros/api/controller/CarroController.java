@@ -1,5 +1,7 @@
 package com.example.vendaCarros.api.controller;
 
+import com.example.vendaCarros.domain.exceptions.EntidadeException;
+import com.example.vendaCarros.domain.exceptions.EntidadeNaoEncontradaException;
 import com.example.vendaCarros.domain.model.Carro;
 import com.example.vendaCarros.domain.service.CadastroCarroService;
 import org.springframework.beans.BeanUtils;
@@ -33,7 +35,12 @@ public class CarroController {
     public Carro atualizar (@PathVariable Long id_carro, @RequestBody Carro carro){
         Carro carroAtual = carroService.validaCarro(id_carro);
         BeanUtils.copyProperties(carro, carroAtual, "id_carro");
-        return carroService.salvar(carroAtual);
+        try {
+            return carroService.salvar(carroAtual);
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new EntidadeException(e.getMessage());
+        }
+
     }
 
     @DeleteMapping("/{id_carro}")

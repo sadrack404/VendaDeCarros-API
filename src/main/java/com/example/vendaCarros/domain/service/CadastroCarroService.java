@@ -1,5 +1,6 @@
 package com.example.vendaCarros.domain.service;
 
+import com.example.vendaCarros.domain.exceptions.EntidadeException;
 import com.example.vendaCarros.domain.exceptions.EntidadeNaoEncontradaException;
 import com.example.vendaCarros.domain.model.Carro;
 import com.example.vendaCarros.domain.repository.CarroRepository;
@@ -30,7 +31,7 @@ public class CadastroCarroService {
             carroRepository.deleteById(id_carro);
         }
         catch (EmptyResultDataAccessException e) {
-            throw new EntidadeNaoEncontradaException(
+            throw new EntidadeException(
                     String.format(MSG_CARRO_NAO_ENCONTRADO, id_carro)
             );
         }
