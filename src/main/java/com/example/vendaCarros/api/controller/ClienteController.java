@@ -1,7 +1,7 @@
-package com.example.vendaCarros.controller;
+package com.example.vendaCarros.api.controller;
 
-import com.example.vendaCarros.model.Cliente;
-import com.example.vendaCarros.repository.ClienteRepository;
+import com.example.vendaCarros.domain.model.Cliente;
+import com.example.vendaCarros.domain.repository.ClienteRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.example.vendaCarros.model;
+package com.example.vendaCarros.domain.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
